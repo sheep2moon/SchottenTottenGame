@@ -15,7 +15,10 @@ const CardSpot = ({ id, card }: CardSpotProps) => {
         id
     });
     return (
-        <div ref={setNodeRef} className={clsx("flex aspect-[225/314] w-32 items-center justify-center rounded-md border border-slate-100", { "bg-slate-400 opacity-80": isOver, "opacity-4 bg-zinc-700": !isOver })}>
+        <div
+            ref={setNodeRef}
+            className={clsx("flex aspect-[225/314] w-32  items-end justify-center rounded-md border border-slate-100 pb-3", { "bg-slate-400 opacity-80": isOver, " border-none bg-none opacity-40 shadow-lg shadow-zinc-400": !isOver })}
+        >
             {!card && <GiCardPlay className="text-4xl text-white" />}
             {card && <PlayingCard face={card.face} suit={card.suit} />}
         </div>

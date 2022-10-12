@@ -6,6 +6,9 @@ import { isCardMatch } from "../../utils/isCardMatch";
 import CardStack from "../board/CardStack";
 import PlayingCard from "../board/PlayingCard";
 import HandCards from "./HandCards";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { swapTurn } from "../../redux/boardSlice";
 
 type BoardCards = {
     [key: string]: Card[];
@@ -13,14 +16,15 @@ type BoardCards = {
 
 type BoardSideProps = {
     side: PlayerSide;
-    currentTurn: PlayerSide;
 };
 
-const BoardSide = ({ side, currentTurn }: BoardSideProps) => {
+const BoardSide = ({ side }: BoardSideProps) => {
     const [handCards, setHandCards] = useState<Card[]>(generateDeck());
     generateDeck();
     const [boardCards, setBoardCards] = useState<BoardCards>({});
+    const { currentTurn } = useSelector((store: RootState) => store.board);
     const [activeId, setActiveId] = useState("");
+    const dispatch = useDispatch();
 
     const handleDragEnd = (e: DragEndEvent) => {
         if (e.over?.id && e.active.id) {
@@ -52,6 +56,7 @@ const BoardSide = ({ side, currentTurn }: BoardSideProps) => {
                     }
                     return prev;
                 });
+                dispatch(swapTurn());
             }
         }
     };
@@ -62,7 +67,7 @@ const BoardSide = ({ side, currentTurn }: BoardSideProps) => {
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className="flex w-full flex-col items-center gap-1 ">
-                <DragOverlay>{activeId ? <PlayingCard face={activeId.split("-")[1] || "1"} suit={activeId.split("-")[2] || "h"} /> : null}</DragOverlay>
+                {/* <DragOverlay>{activeId ? <PlayingCard isReversed={false} face={activeId.split("-")[1] || "1"} suit={activeId.split("-")[2] || "h"} /> : null}</DragOverlay> */}
                 <HandCards currentTurn={currentTurn} cards={handCards} side={side} />
                 <div className="flex gap-2 bg-red-500">
                     {[...Array(7)].map((_, index) => (

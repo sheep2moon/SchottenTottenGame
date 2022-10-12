@@ -9,5 +9,10 @@ export const generateDeck = (): Card[] => {
         });
     });
 
-    return deck;
+    const shuffled = deck
+        .map(value => ({ value, sort: Math.random() }))
+        .sort((a, b) => a.sort - b.sort)
+        .map(({ value }) => value);
+
+    return shuffled;
 };

@@ -15,7 +15,7 @@ const CardStack = ({ cards, col, side }: CardStackProps) => {
             {cards &&
                 cards.map((card, index) => (
                     <div className="absolute" style={{ top: `${index * 60}px` }} key={`${card.face}${card.suit}`}>
-                        <PlayingCard {...card} />
+                        <PlayingCard isReversed={false} {...card} />
                     </div>
                 ))}
             {(!cards || cards.length < 5) && (

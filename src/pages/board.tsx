@@ -1,37 +1,39 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React from "react";
 import ScoreBlocks from "../components/board/ScoreBlocks";
 import TurnCoin from "../components/board/TurnCoin";
-
 import BoardSide from "../components/sides/BoardSide";
-import { boardCols, PlayerSide, Score } from "../types/card";
-
-const startingScore: Score = {
-    "1": "none",
-    "2": "none",
-    "3": "none",
-    "4": "none",
-    "5": "none",
-    "6": "none",
-    "7": "none"
-};
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
 
 const PlayingBoard = () => {
-    const [currentTurn, setCurrentTurn] = useState<PlayerSide>("blue");
-    const [score, setScore] = useState<Score>(startingScore);
-
+    const { currentTurn } = useSelector((store: RootState) => store.board);
     return (
+        // <>
+        //     <TurnCoin />
+        //     <div className="overflow-hidde grid h-screen grid-rows-[2fr_0.1fr_2fr] gap-2 transition-all ">
+        //         <div className={clsx("transition-all", { "order-1 rotate-180": currentTurn === "red", "order-3": currentTurn === "blue" })}>
+        //             <BoardSide side="blue" />
+        //         </div>
+        //         <div className="order-2">
+        //             <ScoreBlocks />
+        //         </div>
+        //         <div className={clsx("transition-all", { "order-1 rotate-180": currentTurn === "blue", "order-3": currentTurn === "red" })}>
+        //             <BoardSide side="red" />
+        //         </div>
+        //     </div>
+        // </>
         <>
-            <TurnCoin currentTurn={currentTurn} setCurrentTurn={setCurrentTurn} />
-            <div className="overflow-hidde grid h-screen grid-rows-[2fr_0.1fr_2fr] gap-2 ">
-                <div className={clsx("", { "order-1 rotate-180": currentTurn === "red", "order-3": currentTurn === "blue" })}>
-                    <BoardSide currentTurn={currentTurn} side="blue" />
+            <TurnCoin />
+            <div className={clsx("overflow-hidde grid h-screen grid-rows-[2fr_0.1fr_2fr] gap-2 transition-all ", { "rotate-180": currentTurn === "red" })}>
+                <div className="rotate-180 transition-all">
+                    <BoardSide side="red" />
                 </div>
-                <div className="order-2">
-                    <ScoreBlocks score={score} />
+                <div className="">
+                    <ScoreBlocks />
                 </div>
-                <div className={clsx("", { "order-1 rotate-180": currentTurn === "blue", "order-3": currentTurn === "red" })}>
-                    <BoardSide currentTurn={currentTurn} side="red" />
+                <div className="transition-all">
+                    <BoardSide side="blue" />
                 </div>
             </div>
         </>
