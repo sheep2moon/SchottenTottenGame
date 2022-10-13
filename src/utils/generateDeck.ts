@@ -1,4 +1,4 @@
-import { faces, suits } from "./../types/card.d";
+import { faces, suits } from "../const/constsants";
 import { Card } from "../types/card";
 
 export const generateDeck = (): Card[] => {

@@ -1,6 +1,6 @@
 import { DndContext, DragEndEvent, DragOverlay, DragStartEvent } from "@dnd-kit/core";
 import React, { useState } from "react";
-import { PlayerSide, Card } from "../../types/card";
+import { PlayerSide, Card, BoardCol } from "../../types/card";
 import { generateDeck } from "../../utils/generateDeck";
 import { isCardMatch } from "../../utils/isCardMatch";
 import CardStack from "../board/CardStack";
@@ -8,7 +8,8 @@ import PlayingCard from "../board/PlayingCard";
 import HandCards from "./HandCards";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
-import { swapTurn } from "../../redux/boardSlice";
+import { addCard, swapTurn } from "../../redux/boardSlice";
+import { calculateStrength } from "../../utils/calculateStrenght";
 
 type BoardCards = {
     [key: string]: Card[];
@@ -21,8 +22,7 @@ type BoardSideProps = {
 const BoardSide = ({ side }: BoardSideProps) => {
     const [handCards, setHandCards] = useState<Card[]>(generateDeck());
     generateDeck();
-    const [boardCards, setBoardCards] = useState<BoardCards>({});
-    const { currentTurn } = useSelector((store: RootState) => store.board);
+    const { currentTurn, boardCards } = useSelector((store: RootState) => store.board);
     const [activeId, setActiveId] = useState("");
     const dispatch = useDispatch();
 
@@ -34,22 +34,8 @@ const BoardSide = ({ side }: BoardSideProps) => {
             const face = card[1];
             const suit = card[2];
             if (face && suit) {
-                const col = spotId.toString().split("-")[1] as keyof BoardCards;
-                if (col) {
-                    setBoardCards((prev: BoardCards) => {
-                        if (prev) {
-                            if (prev[col]) {
-                                const oldCards = prev[col];
-                                if (oldCards) {
-                                    return { ...prev, [col]: [...oldCards, { face, suit }] };
-                                }
-                            } else {
-                                return { ...prev, [col]: [{ face, suit }] };
-                            }
-                        }
-                        return prev;
-                    });
-                }
+                const col = spotId.toString().split("-")[1] as BoardCol;
+                dispatch(addCard({ side, column: col, card: { face, suit } }));
                 setHandCards((prev: Card[]) => {
                     if (prev) {
                         return prev.filter(card => !isCardMatch(card, face, suit));
@@ -67,11 +53,10 @@ const BoardSide = ({ side }: BoardSideProps) => {
     return (
         <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className="flex w-full flex-col items-center gap-1 ">
-                {/* <DragOverlay>{activeId ? <PlayingCard isReversed={false} face={activeId.split("-")[1] || "1"} suit={activeId.split("-")[2] || "h"} /> : null}</DragOverlay> */}
                 <HandCards currentTurn={currentTurn} cards={handCards} side={side} />
                 <div className="flex gap-2 bg-red-500">
                     {[...Array(7)].map((_, index) => (
-                        <CardStack side={side} key={`${side}-col${index + 1}`} cards={boardCards?.[index + 1]} col={(index + 1).toString()} />
+                        <CardStack side={side} key={`${side}-col${index + 1}`} cards={boardCards[side]?.[index + 1]} col={(index + 1).toString()} />
                     ))}
                 </div>
             </div>

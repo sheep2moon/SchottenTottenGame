@@ -5,6 +5,7 @@ import TurnCoin from "../components/board/TurnCoin";
 import BoardSide from "../components/sides/BoardSide";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
+import PlayerInfo from "../components/board/PlayerInfo";
 
 const PlayingBoard = () => {
     const { currentTurn } = useSelector((store: RootState) => store.board);
@@ -25,11 +26,12 @@ const PlayingBoard = () => {
         // </>
         <>
             <TurnCoin />
-            <div className={clsx("overflow-hidde grid h-screen grid-rows-[2fr_0.1fr_2fr] gap-2 transition-all ", { "rotate-180": currentTurn === "red" })}>
-                <div className="rotate-180 transition-all">
+            <PlayerInfo />
+            <div className={clsx("overflow-hidde grid h-screen grid-rows-[2fr_0.1fr_2fr] gap-2 transition-all duration-1000", { "rotate-180": currentTurn === "red" })}>
+                <div className="rotate-180 transition-all ">
                     <BoardSide side="red" />
                 </div>
-                <div className="">
+                <div className="bg-zinc-800 p-1 shadow-md shadow-zinc-900">
                     <ScoreBlocks />
                 </div>
                 <div className="transition-all">
