@@ -18,5 +18,5 @@ export const calculateStrength = (cards: Card[]): SingleScore => {
     // const result = evalu(parsedCards);
     console.log(parsedCards);
     console.log(cardsValue, cardsRank);
-    return { value: cardsValue, rank: cardsRank };
+    return { value: 7562 - cardsValue, rank: cardsRank };
 };

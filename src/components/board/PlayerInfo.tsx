@@ -1,13 +1,19 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { SingleScore } from "../../types/card";
 import TurnCoin from "./TurnCoin";
 
 const PlayerInfo = () => {
     const { currentTurn, boardScore } = useSelector((store: RootState) => store.board);
     const totalScore = useMemo(() => {
-        const redScore = Object.values(boardScore.red).reduce((acc, score) => acc + score.value, 0);
-        const blueScore = Object.values(boardScore.blue).reduce((acc, score) => acc + score.value, 0);
+        const reduceFun = (acc: number, score: SingleScore) => {
+            if (score.value >= 0) {
+                return acc + score.value;
+            } else return acc;
+        };
+        const redScore = Object.values(boardScore.red).reduce(reduceFun, 0);
+        const blueScore = Object.values(boardScore.blue).reduce(reduceFun, 0);
         return { red: redScore, blue: blueScore };
     }, [currentTurn, boardScore]);
     return (

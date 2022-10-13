@@ -31,7 +31,7 @@ const PlayingBoard = () => {
                 <div className="rotate-180 transition-all ">
                     <BoardSide side="red" />
                 </div>
-                <div className="bg-zinc-800 p-1 shadow-md shadow-zinc-900">
+                <div className="bg-zinc-800 shadow-md shadow-zinc-900">
                     <ScoreBlocks />
                 </div>
                 <div className="transition-all">

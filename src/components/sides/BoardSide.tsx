@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../redux/store";
 import { addCard, swapTurn } from "../../redux/boardSlice";
 import { calculateStrength } from "../../utils/calculateStrenght";
+import { boardCols, reverseBoardCols } from "../../const/constsants";
 
 type BoardCards = {
     [key: string]: Card[];
@@ -55,9 +56,8 @@ const BoardSide = ({ side }: BoardSideProps) => {
             <div className="flex w-full flex-col items-center gap-1 ">
                 <HandCards currentTurn={currentTurn} cards={handCards} side={side} />
                 <div className="flex gap-2 bg-red-500">
-                    {[...Array(7)].map((_, index) => (
-                        <CardStack side={side} key={`${side}-col${index + 1}`} cards={boardCards[side]?.[index + 1]} col={(index + 1).toString()} />
-                    ))}
+                    {side === "blue" && boardCols.map(col => <CardStack side={side} key={`blue-col${col}`} cards={boardCards.blue?.[col]} col={col} />)}
+                    {side === "red" && reverseBoardCols.map(col => <CardStack side="red" key={`red-col${col}`} cards={boardCards.red?.[col]} col={col} />)}
                 </div>
             </div>
         </DndContext>

@@ -4,22 +4,22 @@ import { calculateStrength } from "../utils/calculateStrenght";
 
 const startingScore: Score = {
     blue: {
-        "1": { value: 0, rank: 0 },
-        "2": { value: 0, rank: 0 },
-        "3": { value: 0, rank: 0 },
-        "4": { value: 0, rank: 0 },
-        "5": { value: 0, rank: 0 },
-        "6": { value: 0, rank: 0 },
-        "7": { value: 0, rank: 0 }
+        "1": { value: -1, rank: 0 },
+        "2": { value: -1, rank: 0 },
+        "3": { value: -1, rank: 0 },
+        "4": { value: -1, rank: 0 },
+        "5": { value: -1, rank: 0 },
+        "6": { value: -1, rank: 0 },
+        "7": { value: -1, rank: 0 }
     },
     red: {
-        "1": { value: 0, rank: 0 },
-        "2": { value: 0, rank: 0 },
-        "3": { value: 0, rank: 0 },
-        "4": { value: 0, rank: 0 },
-        "5": { value: 0, rank: 0 },
-        "6": { value: 0, rank: 0 },
-        "7": { value: 0, rank: 0 }
+        "1": { value: -1, rank: 0 },
+        "2": { value: -1, rank: 0 },
+        "3": { value: -1, rank: 0 },
+        "4": { value: -1, rank: 0 },
+        "5": { value: -1, rank: 0 },
+        "6": { value: -1, rank: 0 },
+        "7": { value: -1, rank: 0 }
     }
 };
 

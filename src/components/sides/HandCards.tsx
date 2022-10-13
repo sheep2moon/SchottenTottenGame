@@ -9,6 +9,8 @@ type HandCardsProps = {
 };
 
 const HandCards = ({ cards, side, currentTurn }: HandCardsProps) => {
+    console.log(cards);
+
     if (!cards || cards.length === 0) return <div>No Cards</div>;
 
     return <div className="fixed bottom-2 right-2">{cards[cards.length - 1] && <DraggableCard isReversed={currentTurn !== side} side={side} face={cards[cards.length - 1]?.face || ""} suit={cards[cards.length - 1]?.suit || ""} />}</div>;

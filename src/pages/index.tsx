@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 
 const Home: NextPage = () => {
     return (
@@ -10,7 +11,11 @@ const Home: NextPage = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4"></main>
+            <main className="container mx-auto flex min-h-screen flex-col items-center justify-center p-4">
+                <Link href="/board">
+                    <a className="text-2xl font-semibold text-slate-50 hover:underline">GRAJ</a>
+                </Link>
+            </main>
         </>
     );
 };
