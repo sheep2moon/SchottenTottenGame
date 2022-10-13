@@ -1,19 +1,19 @@
 import React from "react";
-import { PlayerSide, Card } from "../../types/card";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 import DraggableCard from "../board/DraggableCard";
 
-type HandCardsProps = {
-    cards: Card[];
-    side: PlayerSide;
-    currentTurn: PlayerSide;
-};
+const HandCards = () => {
+    const { currentTurn } = useSelector((store: RootState) => store.board);
+    const { decks } = useSelector((store: RootState) => store.hand);
+    // if (!cards || cards.length === 0) return <div>No Cards</div>;
+    console.log(decks);
 
-const HandCards = ({ cards, side, currentTurn }: HandCardsProps) => {
-    console.log(cards);
-
-    if (!cards || cards.length === 0) return <div>No Cards</div>;
-
-    return <div className="fixed bottom-2 right-2">{cards[cards.length - 1] && <DraggableCard isReversed={currentTurn !== side} side={side} face={cards[cards.length - 1]?.face || ""} suit={cards[cards.length - 1]?.suit || ""} />}</div>;
+    return (
+        <div className="fixed bottom-2 right-2 z-[100]">
+            <DraggableCard isReversed={false} {...decks[currentTurn].cards[decks[currentTurn].count - 1]} />
+        </div>
+    );
 };
 
 export default HandCards;

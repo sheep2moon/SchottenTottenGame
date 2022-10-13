@@ -1,8 +1,11 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
-import { SingleScore } from "../../types/card";
+import { PlayerSide, SingleScore } from "../../types/card";
+import CountUp from "react-countup";
 import TurnCoin from "./TurnCoin";
+import clsx from "clsx";
+import { MdOutlineSportsScore } from "react-icons/md";
 
 const PlayerInfo = () => {
     const { currentTurn, boardScore } = useSelector((store: RootState) => store.board);
@@ -17,15 +20,36 @@ const PlayerInfo = () => {
         return { red: redScore, blue: blueScore };
     }, [currentTurn, boardScore]);
     return (
-        <div className="text-zinc absolute top-1/2 left-2 z-50 flex -translate-y-1/2 flex-col items-center rounded-md bg-zinc-200 p-4 text-lg font-bold shadow-lg shadow-zinc-900">
-            <span>Score</span>
-            <div className="flex">
-                <span className="text-blue-500">{totalScore.blue}</span>
-                <span>-</span>
-                <span className="text-red-500">{totalScore.red}</span>
+        <div>
+            <div className="absolute top-8 left-24 ">
+                <ScoreCounter score={totalScore.blue} side="blue" />
+            </div>
+            <div className="absolute top-8 right-24 ">
+                <ScoreCounter score={totalScore.red} side="red" />
             </div>
         </div>
     );
 };
 
 export default PlayerInfo;
+
+const ScoreCounter = ({ score, side }: { score: number; side: PlayerSide }) => {
+    const [endedAt, setEndedAt] = useState(0);
+    const onEnd = () => {
+        setEndedAt(score);
+    };
+
+    useEffect(() => {
+        console.log(endedAt);
+    }, [endedAt]);
+
+    return (
+        <div className={clsx("flex  items-center gap-2 rounded-md bg-black/10 p-2 text-3xl shadow-md shadow-black/90 transition-all duration-200", { "text-red-600": side === "red", "text-blue-600": side === "blue" })}>
+            <span className="flex items-center gap-1 text-3xl font-semibold capitalize">
+                <MdOutlineSportsScore />
+                {side}:
+            </span>
+            <CountUp start={endedAt} onEnd={onEnd} end={score} duration={1} />
+        </div>
+    );
+};

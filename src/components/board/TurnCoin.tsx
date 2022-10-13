@@ -9,7 +9,7 @@ const TurnCoin = () => {
     const { currentTurn } = useSelector((store: RootState) => store.board);
 
     return (
-        <div className={clsx("absolute bottom-2 left-2 rounded-full ", { "bg-red-400": currentTurn === "red", "bg-blue-400": currentTurn === "blue" })}>
+        <div className={clsx("absolute bottom-6 left-6 rounded-full shadow-md shadow-black/50", { "bg-red-400": currentTurn === "red", "bg-blue-400": currentTurn === "blue" })}>
             <RiCopperCoinFill className="text-7xl" />
         </div>
     );

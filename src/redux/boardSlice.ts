@@ -53,9 +53,6 @@ export const boardSlice = createSlice({
         swapTurn: state => {
             state.currentTurn = state.currentTurn === "blue" ? "red" : "blue";
         },
-        // makeScore: (state, action: PayloadAction<{ column: BoardCol; side: PlayerSide }>) => {
-        //     state.score[action.payload.column] = action.payload.side;
-        // },
         addCard: (state, action: PayloadAction<{ side: PlayerSide; column: BoardCol; card: Card }>) => {
             const { side, column, card } = action.payload;
             state.boardCards[side][column]?.push(card);
@@ -65,7 +62,6 @@ export const boardSlice = createSlice({
                 const res = calculateStrength(cards);
                 state.boardScore[side][column] = res;
             }
-            // HANDLE CHECK 5
         }
     }
 });
