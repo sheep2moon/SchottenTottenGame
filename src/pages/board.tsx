@@ -11,6 +11,7 @@ import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { BoardCol, PlayerSide } from "../types/card";
 import { addCard, swapTurn } from "../redux/boardSlice";
 import { popCard } from "../redux/handSlice";
+import HowToPlay from "../components/board/HowToPlay";
 
 const PlayingBoard = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const PlayingBoard = () => {
         <>
             <DndContext onDragEnd={handleDragEnd}>
                 <TurnCoin />
+                <HowToPlay />
                 <PlayerInfo />
                 <HandCards />
                 <div className={clsx("mx-auto grid h-screen grid-rows-[2fr_0.1fr_2fr] gap-2 overflow-hidden  p-1   transition-all duration-700 ", { "rotate-180": currentTurn === "red" })}>
