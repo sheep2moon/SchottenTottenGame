@@ -57,7 +57,7 @@ export const boardSlice = createSlice({
             const { side, column, card } = action.payload;
             state.boardCards[side][column]?.push(card);
             const cards = state.boardCards[side][column];
-
+            const opponentSide = side === "blue" ? "red" : "blue";
             if (cards && cards.length === 5) {
                 const res = calculateStrength(cards);
                 state.boardScore[side][column] = res;
